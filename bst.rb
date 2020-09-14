@@ -107,6 +107,48 @@ class Tree
     level_arr
   end
 
+  def inorder(root = @root, arr = [])
+    return root if root.nil?
+
+    if root.left
+      inorder(root.left, arr)
+      arr << root.data
+    elsif root.left.nil?
+      arr << root.data
+    end
+    if root.right
+      inorder(root.right, arr)
+    end
+    arr
+  end
+
+  def preorder(root = @root, arr = [])
+    return root if root.nil?
+
+    arr << root.data
+    if root.left
+      preorder(root.left, arr)
+    end
+    if root.right
+      preorder(root.right, arr)
+    end
+    arr
+  end
+
+  def postorder(root = @root, arr = [])
+    return root if root.nil?
+
+    if root.left
+      postorder(root.left, arr)
+    end
+    if root.right
+      postorder(root.right, arr)
+    end
+    arr << root.data
+
+    arr
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -114,6 +156,6 @@ class Tree
   end
 end
 
-new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
+new_tree = Tree.new([25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90])
 
-p new_tree.pretty_print
+p new_tree.postorder
