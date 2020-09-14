@@ -57,6 +57,17 @@ class Tree
     current
   end
 
+  def find(root = @root, value)
+    return nil if root.nil?
+    if root.data == value
+      return root
+    elsif value > root.data
+      root.right = find(root.right, value)
+    elsif value < root.data
+      root.left = find(root.left, value)
+    end
+  end
+
   def delete(root = @root, value)
     return root if root.nil?
 
@@ -85,10 +96,4 @@ end
 
 new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 
-new_tree.insert(8)
-
-p new_tree
-
-new_tree.delete(4)
-
-p new_tree
+p new_tree.find(7)
