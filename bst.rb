@@ -92,8 +92,28 @@ class Tree
     end
     root
   end
+
+  def level_order(root = @root)
+    level_arr = []
+    node_queue = []
+    node_queue.unshift(root)
+    until node_queue.empty?
+      current = node_queue[-1]
+      level_arr.push(current.data)
+      node_queue.unshift(current.left) unless current.left.nil?
+      node_queue.unshift(current.right) unless current.right.nil?
+      node_queue.pop
+    end
+    level_arr
+  end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
 end
 
 new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 
-p new_tree.find(7)
+p new_tree.pretty_print
