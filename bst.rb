@@ -187,6 +187,16 @@ class Tree
     end
   end
 
+  def balanced?(root = @root)
+    return nil if root.nil?
+
+    lheight = height(root.left) if root.left
+    rheight = height(root.right) if root.right
+    return false if lheight > rheight || lheight < rheight
+
+    true
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -196,8 +206,8 @@ end
 
 new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 
-p new_tree.depth(1)
+p new_tree.balanced?
 
 new_tree.insert(8)
 
-p new_tree.depth(8)
+p new_tree.balanced?
