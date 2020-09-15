@@ -192,7 +192,7 @@ class Tree
 
     lheight = height(root.left) if root.left
     rheight = height(root.right) if root.right
-    return false if lheight > rheight || lheight < rheight
+    return false if (lheight - rheight) > 1 || (rheight - lheight) > 1
 
     true
   end
@@ -209,5 +209,9 @@ new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 p new_tree.balanced?
 
 new_tree.insert(8)
+
+p new_tree.balanced?
+
+new_tree.insert(9)
 
 p new_tree.balanced?
