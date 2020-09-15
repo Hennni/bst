@@ -197,6 +197,16 @@ class Tree
     true
   end
 
+  def self.rebalance(tree)
+    return nil if tree.nil?
+    return nil if tree.balanced?
+
+    new_arr = tree.level_order
+
+    tree = Tree.new(new_arr)
+    tree
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -210,8 +220,12 @@ p new_tree.balanced?
 
 new_tree.insert(8)
 
+new_tree.insert(9)
+
 p new_tree.balanced?
 
-new_tree.insert(9)
+new_tree = Tree.rebalance(new_tree)
+
+p new_tree.pretty_print
 
 p new_tree.balanced?
