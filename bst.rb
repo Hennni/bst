@@ -156,23 +156,35 @@ class Tree
     height = 0
     node_queue.unshift(root)
 
-    while !node_queue.empty?
+    until node_queue.empty?
       size = node_queue.length
 
-      while size > 0
+      while size.positive?
         front = node_queue.pop
-
-        if front.left
-          node_queue.unshift(front.left)
-        end
-        if front.right
-          node_queue.unshift(front.right)
-        end
+        node_queue.unshift(front.left) if front.left
+        node_queue.unshift(front.right) if front.right
         size -= 1
-      end 
+      end
       height += 1
     end
-    return height - 1
+    height - 1
+  end
+
+  def depth(root = @root, counter = 0, node)
+    return root if root.nil?
+
+    current = root.data
+    if current == node
+      counter
+    elsif node < current
+      counter += 1
+      depth(root.left, counter, node)
+    elsif node > current
+      counter += 1
+      depth(root.right, counter, node)
+    else
+      'Not here'
+    end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -184,8 +196,8 @@ end
 
 new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 
-p new_tree.height
+p new_tree.depth(1)
 
 new_tree.insert(8)
 
-p new_tree.height
+p new_tree.depth(8)
