@@ -149,6 +149,32 @@ class Tree
     arr
   end
 
+  def height(root = @root)
+    return 0 if root.nil?
+
+    node_queue = []
+    height = 0
+    node_queue.unshift(root)
+
+    while !node_queue.empty?
+      size = node_queue.length
+
+      while size > 0
+        front = node_queue.pop
+
+        if front.left
+          node_queue.unshift(front.left)
+        end
+        if front.right
+          node_queue.unshift(front.right)
+        end
+        size -= 1
+      end 
+      height += 1
+    end
+    return height - 1
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -156,6 +182,10 @@ class Tree
   end
 end
 
-new_tree = Tree.new([25, 15, 10, 4, 12, 22, 18, 24, 50, 35, 31, 44, 70, 66, 90])
+new_tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 
-p new_tree.postorder
+p new_tree.height
+
+new_tree.insert(8)
+
+p new_tree.height
